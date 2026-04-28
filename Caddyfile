@@ -1,0 +1,29 @@
+vw.fuhrmann.dev {
+    reverse_proxy vaultwarden:80
+}
+
+port.fuhrmann.dev {
+    reverse_proxy portainer:9000
+}
+
+clarity-guild.live {
+    reverse_proxy clarity-backend:3001
+}
+
+task.fuhrmann.dev {
+    handle /api/* {
+        reverse_proxy freelancehub_api:3000
+    }
+    handle /uploads/* {
+        reverse_proxy freelancehub_api:3000
+    }
+    handle {
+        reverse_proxy freelancehub_web:80
+    }
+    encode gzip
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        -Server
+    }
+}
