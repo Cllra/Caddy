@@ -7,7 +7,12 @@ port.fuhrmann.dev {
 }
 
 clarity-guild.live {
-    reverse_proxy clarity-backend:3001
+    handle /secret* {
+        reverse_proxy clarity-secret:3002
+    }
+    handle {
+        reverse_proxy clarity-backend:3001
+    }
 }
 
 task.fuhrmann.dev {
@@ -20,6 +25,38 @@ task.fuhrmann.dev {
     handle {
         reverse_proxy freelancehub_web:80
     }
+    encode gzip
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        -Server
+    }
+}
+
+progress.clarity-guild.live {
+    handle /api/* {
+        reverse_proxy bdo-tasks-bdo-tasks-backend-1:3002
+    }
+    handle {
+        reverse_proxy bdo-tasks-bdo-tasks-frontend-1:80
+    }
+}
+
+bib.fuhrmann.dev {
+    reverse_proxy bib-demo-web:8000
+}
+
+mop.fuhrmann.dev {
+    root * /srv/mop
+    file_server
+    encode gzip
+}
+
+web.fuhrmann.dev {
+    root * /srv/web
+    @hidden path *.md
+    respond @hidden 404
+    file_server
     encode gzip
     header {
         X-Content-Type-Options nosniff

@@ -10,6 +10,8 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./data:/data
       - ./config:/config
+      - /root/services/mop/site:/srv/mop:ro
+      - /root/services/web:/srv/web:ro
     networks:
       - proxy-net
 
