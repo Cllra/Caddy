@@ -42,6 +42,21 @@ bib.fuhrmann.dev {
     reverse_proxy bib-demo-web:8000
 }
 
+training.fuhrmann.dev {
+    handle /api/* {
+        reverse_proxy training-app_api:3000
+    }
+    handle {
+        reverse_proxy training-app_web:80
+    }
+    encode gzip
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        -Server
+    }
+}
+
 mop.fuhrmann.dev {
     root * /srv/mop
     file_server
