@@ -1,7 +1,3 @@
-vw.fuhrmann.dev {
-    reverse_proxy vaultwarden:80
-}
-
 port.fuhrmann.dev {
     reverse_proxy portainer:9000
 }
